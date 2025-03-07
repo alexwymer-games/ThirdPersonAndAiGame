@@ -12,6 +12,8 @@ public class WeaponController : MonoBehaviour
     public Transform raycastOrigin;
     public Transform raycastDestination;
 
+    public AnimationClip weaponAnimation;
+
     Ray ray;
     RaycastHit hitInfo;
 
