@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class PlayerCharacterLocomotion : MonoBehaviour
 {
-    
     //Movement Input and Variables 
     [SerializeField] Vector2 inputVector;
 
@@ -19,8 +18,6 @@ public class PlayerCharacterLocomotion : MonoBehaviour
     }
 
     #endregion
-
-
 
     public void MovePlayer(Vector2 inputVec)
     {

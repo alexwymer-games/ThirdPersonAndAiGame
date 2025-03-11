@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class WeaponController : MonoBehaviour
 {
+    [SerializeField] public string weaponName;
+
+
     public bool isFiring = false;
     public ParticleSystem[] muzzleFlashParticles;
     public ParticleSystem hitEffect;

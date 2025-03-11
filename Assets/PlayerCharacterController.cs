@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public class PlayerCharacterController : MonoBehaviour
 {
@@ -11,12 +12,11 @@ public class PlayerCharacterController : MonoBehaviour
     private PlayerCharacterAiming playerCharacterAiming;
 
     private PlayerCharacterActiveWeapon playerCharacterActiveWeapon;
-   
-
 
     //Player Variables 
-
     private bool b_isAiming = false;
+
+    private bool b_weaponIsHolstered = true;
 
     #region LIFECYCLE
     private void Awake()
@@ -44,7 +44,7 @@ public class PlayerCharacterController : MonoBehaviour
     {
         playerCharacterLocomotion.MovePlayer(playerActions.Movement.ReadValue<Vector2>());
 
-        playerCharacterAiming.AimWeapon(b_isAiming);
+        //playerCharacterAiming.AimWeapon(b_isAiming);
     }
 
     private void FixedUpdate()
@@ -66,6 +66,8 @@ public class PlayerCharacterController : MonoBehaviour
         playerActions.Shoot.performed += ctx => PlayerBeginShootingWeapon();
         playerActions.Shoot.canceled += ctx => PlayerStopShootingWeapon();
 
+        playerActions.Holster.performed += ctx => ToggleHolsterWeapon();
+
         // Lock cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -79,6 +81,8 @@ public class PlayerCharacterController : MonoBehaviour
 
         playerActions.Shoot.performed -= ctx => PlayerBeginShootingWeapon();
         playerActions.Shoot.canceled -= ctx => PlayerStopShootingWeapon();
+
+        playerActions.Holster.performed -= ctx => ToggleHolsterWeapon();
 
         // Lock cursor
         Cursor.lockState = CursorLockMode.None;
@@ -111,6 +115,20 @@ public class PlayerCharacterController : MonoBehaviour
         {
             playerCharacterActiveWeapon.EndFiringWeapon();
         }
+    }
+
+    //Holster Weapon
+    public void ToggleHolsterWeapon()
+    {
+        b_weaponIsHolstered = !b_weaponIsHolstered;
+
+        playerCharacterActiveWeapon.SetEquipBool(b_weaponIsHolstered);
+    }
+
+
+    public void UnequipWeaponState()
+    {
+        // handsIKLayer.weight = 0;
     }
 
     #endregion

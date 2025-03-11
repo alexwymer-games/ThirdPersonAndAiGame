@@ -15,13 +15,11 @@ public class PlayerCharacterAiming : MonoBehaviour
 
     private Camera mainCamera;
 
-    [SerializeField] private Rig rigAimLayer;
     [SerializeField] private float aimDuration;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
         playerRigidBody = GetComponent<Rigidbody>();
 
         mainCamera = Camera.main;
@@ -43,19 +41,5 @@ public class PlayerCharacterAiming : MonoBehaviour
         // Apply rotations
         camFollowPosition.localEulerAngles = new Vector3(yRotation, camFollowPosition.localEulerAngles.y, camFollowPosition.localEulerAngles.z);
         playerRigidBody.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, xRotation, 0), turnSpeed * Time.deltaTime));
-    }
-
-    
-
-    public void AimWeapon(bool b_aim)
-    {
-        if (b_aim) 
-        {
-            rigAimLayer.weight += Time.deltaTime / aimDuration;
-        }
-        else
-        {
-             rigAimLayer.weight -= Time.deltaTime / aimDuration;
-        }
     }
 }

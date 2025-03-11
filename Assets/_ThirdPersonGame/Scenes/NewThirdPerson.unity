@@ -617,6 +617,7 @@ Transform:
   m_Children:
   - {fileID: 4291893664364307141}
   - {fileID: 4334991010294445554}
+  - {fileID: 1109609780}
   m_Father: {fileID: 1162846114}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &478701517
@@ -1005,7 +1006,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70b342d8ce5c2fd48b8fa3147d48d1d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Weight: 0
+  m_Weight: 1
   m_Effectors: []
 --- !u!4 &733631262
 Transform:
@@ -1264,6 +1265,37 @@ Transform:
   - {fileID: 4555657763040435936}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1109609779
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1109609780}
+  m_Layer: 0
+  m_Name: WeaponContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1109609780
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1109609779}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 478701516}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1133406185
 GameObject:
   m_ObjectHideFlags: 0
@@ -1374,13 +1406,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1162846113}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 478701516}
-  m_Father: {fileID: 1070549874233789396}
+  m_Father: {fileID: 1670013620}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1327014053
 GameObject:
@@ -1608,6 +1640,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1670013620}
+  - component: {fileID: 1670013621}
   m_Layer: 0
   m_Name: --RigLayers--
   m_TagString: Untagged
@@ -1628,12 +1661,35 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1162846114}
   - {fileID: 1399374910}
   - {fileID: 120042173}
   - {fileID: 1351938309}
   - {fileID: 733631262}
   m_Father: {fileID: 1070549874233789396}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1670013621
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1670013619}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3a5b09f61f1d73f4eb8bf73281933ab2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 1
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1753443907
 GameObject:
   m_ObjectHideFlags: 0
@@ -2512,7 +2568,6 @@ Transform:
   - {fileID: 2098809826}
   - {fileID: 6933714409480846666}
   - {fileID: 7505838627049421550}
-  - {fileID: 1162846114}
   - {fileID: 1670013620}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4890,7 +4945,7 @@ Animator:
   m_GameObject: {fileID: 400974147380515182}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 43b8bc78a133b604f86dec829cd8321e, type: 3}
-  m_Controller: {fileID: 22100000, guid: b1bff232a075ac946b658889d8604f57, type: 2}
+  m_Controller: {fileID: 9100000, guid: aa77634ceed55ba4eb70c3292edd1c51, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -5010,7 +5065,6 @@ MonoBehaviour:
   camFollowPosition: {fileID: 131741084}
   mouseSensitivity: 1
   turnSpeed: 15
-  rigAimLayer: {fileID: 1351938308}
   aimDuration: 0.2
 --- !u!114 &8262768955200282456
 MonoBehaviour:
@@ -5060,10 +5114,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeWeaponController: {fileID: 0}
   crosshairTarget: {fileID: 518820453}
-  weaponParent: {fileID: 478701516}
-  playerWeaponsHandIK: {fileID: 733631261}
+  weaponParent: {fileID: 1109609780}
+  playerWeaponsHandIK: {fileID: 0}
   weaponLeftGrip: {fileID: 4334991010294445554}
   weaponRightGrip: {fileID: 4291893664364307141}
+  playerRigAnimator: {fileID: 1670013621}
 --- !u!1 &8265457660637665783
 GameObject:
   m_ObjectHideFlags: 0

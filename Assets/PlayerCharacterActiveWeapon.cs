@@ -8,9 +8,7 @@ public class PlayerCharacterActiveWeapon : MonoBehaviour
     //Components
     [SerializeField] private WeaponController activeWeaponController;
 
-
     public Transform crosshairTarget;
-
 
     public Transform weaponParent;
     public Rig playerWeaponsHandIK;
@@ -18,18 +16,13 @@ public class PlayerCharacterActiveWeapon : MonoBehaviour
     public Transform weaponLeftGrip;
     public Transform weaponRightGrip;
 
-    Animator playerAnimator;
-    AnimatorOverrideController playerAnimatorOverride;
+    public Animator playerRigAnimator;
+    
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //Get and Setup Animators
-        playerAnimator = GetComponent<Animator>();
-        playerAnimatorOverride = playerAnimator.runtimeAnimatorController as AnimatorOverrideController;
-
-
         //Get Exisiting Weapon
         WeaponController existingWeapon = GetComponentInChildren<WeaponController>();
 
@@ -39,24 +32,6 @@ public class PlayerCharacterActiveWeapon : MonoBehaviour
             EquipWeapon(existingWeapon);
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (activeWeaponController)
-        {
-            playerWeaponsHandIK.weight = 1.0f;
-            playerAnimator.SetLayerWeight(1, 1.0f);
-        }
-        else
-        {
-            playerWeaponsHandIK.weight = 0.0f;
-            playerAnimator.SetLayerWeight(1, 0.0f);
-        }
-    }
-
-
-
 
     public void BeginFiringWeapon()
     {
@@ -89,29 +64,18 @@ public class PlayerCharacterActiveWeapon : MonoBehaviour
         activeWeaponController.transform.localPosition = Vector3.zero;
         activeWeaponController.transform.localRotation = Quaternion.identity;
 
-        playerWeaponsHandIK.weight = 1.0f;
-        playerAnimator.SetLayerWeight(1, 1.0f);
+        string animationString = "PlayerEquip_" + activeWeaponController.weaponName;
 
-        Invoke(nameof(SetAnimationDelay), 0.01f);
+        playerRigAnimator.Play(animationString);
+
+        Debug.Log(animationString);
     }
 
-    private void SetAnimationDelay()
+    public void SetEquipBool(bool b_isHolstered)
     {
-        playerAnimatorOverride["WeaponAnim_Empty"] = activeWeaponController.weaponAnimation;
+        bool weaponIsHolstered = b_isHolstered;
+
+        playerRigAnimator.SetBool("HolsterWeapon", weaponIsHolstered);
     }
 
-
-    [ContextMenu("Save Weapon Pose")]
-    public void SaveWeaponPose()
-    {
-        GameObjectRecorder recorder = new GameObjectRecorder(gameObject);
-
-        recorder.BindComponentsOfType<Transform>(activeWeaponController.gameObject, false);
-        recorder.BindComponentsOfType<Transform>(weaponLeftGrip.gameObject, false);
-        recorder.BindComponentsOfType<Transform>(weaponRightGrip.gameObject, false);
-        recorder.TakeSnapshot(0.0f);
-        recorder.SaveToClip(activeWeaponController.weaponAnimation);
-
-        UnityEditor.AssetDatabase.SaveAssets();
-    }
 }
