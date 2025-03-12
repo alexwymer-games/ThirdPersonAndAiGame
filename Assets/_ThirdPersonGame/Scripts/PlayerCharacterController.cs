@@ -55,6 +55,7 @@ public class PlayerCharacterController : MonoBehaviour
     private void LateUpdate()
     {
         playerCharacterAiming.UpdateAimingRotations(playerActions.Look.ReadValue<Vector2>());
+        playerCharacterAiming.UpdateAimWithRecoil();
     }
 
     private void OnEnable()

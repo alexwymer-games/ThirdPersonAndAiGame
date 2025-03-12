@@ -6,6 +6,9 @@ using UnityEngine.Events;
 public enum EventType
 {
     
+    UPDATE_WEAPON_RECOIL,
+    TRIGGER_WEAPON_RECOIL,
+
 }
 
 public class EventManager : MonoBehaviour

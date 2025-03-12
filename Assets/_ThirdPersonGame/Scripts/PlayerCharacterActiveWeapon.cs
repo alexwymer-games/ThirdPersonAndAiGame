@@ -20,6 +20,8 @@ public class PlayerCharacterActiveWeapon : MonoBehaviour
     public WeaponController activeWeaponController;
     public int activeWeaponIndex = 0;
 
+    private WeaponRecoil activeWeaponRecoil;
+
     bool isHolstered = false;
 
     public Transform crosshairTarget;
@@ -37,18 +39,7 @@ public class PlayerCharacterActiveWeapon : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //Get Exisiting Weapon
-        //WeaponController existingWeapon = GetComponentInChildren<WeaponController>();
-
-
-
-        //If Existing Weapon exisitng, equip it
-        //if (existingWeapon)
-        //{
-       //     EquipWeapon(existingWeapon);
-        //}
-
-
+  
     }
 
     private void Update()
@@ -61,6 +52,10 @@ public class PlayerCharacterActiveWeapon : MonoBehaviour
         if (activeWeaponController != null && !isHolstered) 
         {
             activeWeaponController.StartFiring();
+            activeWeaponRecoil.GenerateRecoil(activeWeaponController.weaponName);
+
+            //Trigger Event - Updates PlayerAiming Recoil Variables
+            EventManager.TriggerEvent(EventType.UPDATE_WEAPON_RECOIL, activeWeaponRecoil);
         }
     }
 
@@ -85,18 +80,16 @@ public class PlayerCharacterActiveWeapon : MonoBehaviour
         }
 
         activeWeaponController = weaponController;
-
         activeWeaponController.raycastDestination = crosshairTarget;
-
         activeWeaponController.transform.SetParent(weaponSlots[weaponSlotIndex], false);
-
-
 
         equippedWeaponControllers[weaponSlotIndex] = activeWeaponController;
 
-        //Debug.Log(animationString);
-
         SetActiveWeapon(weaponController.weaponSlotType);
+
+        //Get Weapon Recoil
+        activeWeaponRecoil = activeWeaponController.GetComponent<WeaponRecoil>();
+        activeWeaponRecoil.playerRigAnimator = playerRigAnimator;
     }
 
     public void ToggleActiveWeapon()
@@ -175,14 +168,6 @@ public class PlayerCharacterActiveWeapon : MonoBehaviour
         }
     }
 
-
-    /*
-    public void SetEquipBool(bool b_isHolstered)
-    {
-        bool weaponIsHolstered = b_isHolstered;
-
-        playerRigAnimator.SetBool("HolsterWeapon", weaponIsHolstered);
-    }*/
 
     public void EquipPrimaryWeapon()
     {
