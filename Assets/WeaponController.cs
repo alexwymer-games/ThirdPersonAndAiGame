@@ -5,7 +5,7 @@ using UnityEngine;
 public class WeaponController : MonoBehaviour
 {
     [SerializeField] public string weaponName;
-
+    [SerializeField] public WeaponSlot weaponSlotType;
 
     public bool isFiring = false;
     public ParticleSystem[] muzzleFlashParticles;

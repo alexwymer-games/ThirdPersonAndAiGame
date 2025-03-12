@@ -135,6 +135,24 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EquipPrimary"",
+                    ""type"": ""Button"",
+                    ""id"": ""31e6bee7-d6f8-4042-b85f-f732edf97567"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EquipSecondary"",
+                    ""type"": ""Button"",
+                    ""id"": ""95bcb0a9-53e2-4be4-9816-9dca8c354d63"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -335,6 +353,50 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                     ""action"": ""Holster"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bf228017-70c9-49c1-848a-78251094fb6c"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EquipPrimary"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""530cb9f7-d4ce-46c8-9dc8-ffb114924f1a"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EquipPrimary"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9121de9b-070c-44b2-b44d-1f7eb81e856b"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EquipSecondary"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9576b1dd-aec1-4e3b-978c-a7931acf5a01"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EquipSecondary"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -348,6 +410,8 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_Holster = m_Player.FindAction("Holster", throwIfNotFound: true);
+        m_Player_EquipPrimary = m_Player.FindAction("EquipPrimary", throwIfNotFound: true);
+        m_Player_EquipSecondary = m_Player.FindAction("EquipSecondary", throwIfNotFound: true);
     }
 
     ~@GameControls()
@@ -433,6 +497,8 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Aim;
     private readonly InputAction m_Player_Shoot;
     private readonly InputAction m_Player_Holster;
+    private readonly InputAction m_Player_EquipPrimary;
+    private readonly InputAction m_Player_EquipSecondary;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -464,6 +530,14 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Holster".
         /// </summary>
         public InputAction @Holster => m_Wrapper.m_Player_Holster;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/EquipPrimary".
+        /// </summary>
+        public InputAction @EquipPrimary => m_Wrapper.m_Player_EquipPrimary;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/EquipSecondary".
+        /// </summary>
+        public InputAction @EquipSecondary => m_Wrapper.m_Player_EquipSecondary;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -505,6 +579,12 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
             @Holster.started += instance.OnHolster;
             @Holster.performed += instance.OnHolster;
             @Holster.canceled += instance.OnHolster;
+            @EquipPrimary.started += instance.OnEquipPrimary;
+            @EquipPrimary.performed += instance.OnEquipPrimary;
+            @EquipPrimary.canceled += instance.OnEquipPrimary;
+            @EquipSecondary.started += instance.OnEquipSecondary;
+            @EquipSecondary.performed += instance.OnEquipSecondary;
+            @EquipSecondary.canceled += instance.OnEquipSecondary;
         }
 
         /// <summary>
@@ -531,6 +611,12 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
             @Holster.started -= instance.OnHolster;
             @Holster.performed -= instance.OnHolster;
             @Holster.canceled -= instance.OnHolster;
+            @EquipPrimary.started -= instance.OnEquipPrimary;
+            @EquipPrimary.performed -= instance.OnEquipPrimary;
+            @EquipPrimary.canceled -= instance.OnEquipPrimary;
+            @EquipSecondary.started -= instance.OnEquipSecondary;
+            @EquipSecondary.performed -= instance.OnEquipSecondary;
+            @EquipSecondary.canceled -= instance.OnEquipSecondary;
         }
 
         /// <summary>
@@ -606,5 +692,19 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnHolster(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "EquipPrimary" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnEquipPrimary(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "EquipSecondary" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnEquipSecondary(InputAction.CallbackContext context);
     }
 }

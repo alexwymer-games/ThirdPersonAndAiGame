@@ -10063,6 +10063,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponName: Pistol
+  weaponSlotType: 1
   isFiring: 0
   muzzleFlashParticles:
   - {fileID: 6442041386340335219}

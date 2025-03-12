@@ -68,6 +68,9 @@ public class PlayerCharacterController : MonoBehaviour
 
         playerActions.Holster.performed += ctx => ToggleHolsterWeapon();
 
+        playerActions.EquipPrimary.performed += ctx => EquipPrimaryWeapon();
+        playerActions.EquipSecondary.performed += ctx => EquipSecondaryWeapon();
+
         // Lock cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -83,6 +86,9 @@ public class PlayerCharacterController : MonoBehaviour
         playerActions.Shoot.canceled -= ctx => PlayerStopShootingWeapon();
 
         playerActions.Holster.performed -= ctx => ToggleHolsterWeapon();
+
+        playerActions.EquipPrimary.performed -= ctx => EquipPrimaryWeapon();
+        playerActions.EquipSecondary.performed -= ctx => EquipSecondaryWeapon();
 
         // Lock cursor
         Cursor.lockState = CursorLockMode.None;
@@ -120,16 +126,21 @@ public class PlayerCharacterController : MonoBehaviour
     //Holster Weapon
     public void ToggleHolsterWeapon()
     {
-        b_weaponIsHolstered = !b_weaponIsHolstered;
-
-        playerCharacterActiveWeapon.SetEquipBool(b_weaponIsHolstered);
+        playerCharacterActiveWeapon.ToggleActiveWeapon();
     }
 
-
-    public void UnequipWeaponState()
+    //Equip Primary
+    private void EquipPrimaryWeapon()
     {
-        // handsIKLayer.weight = 0;
+        playerCharacterActiveWeapon.EquipPrimaryWeapon();
     }
+
+    //Equip Secondary
+    private void EquipSecondaryWeapon()
+    {
+        playerCharacterActiveWeapon.EquipSecondaryWeapon();
+    }
+
 
     #endregion
 }
