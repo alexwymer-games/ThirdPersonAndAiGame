@@ -12,6 +12,8 @@ public class PlayerCharacterController : MonoBehaviour
     private PlayerCharacterAiming playerCharacterAiming;
 
     private PlayerCharacterActiveWeapon playerCharacterActiveWeapon;
+    private PlayerCharacterWeaponReload playerCharacterWeaponReload;
+
 
     //Player Variables 
     private bool b_isAiming = false;
@@ -30,6 +32,8 @@ public class PlayerCharacterController : MonoBehaviour
         playerCharacterAiming = GetComponent<PlayerCharacterAiming>();
 
         playerCharacterActiveWeapon = GetComponentInChildren<PlayerCharacterActiveWeapon>();
+
+        playerCharacterWeaponReload = GetComponent<PlayerCharacterWeaponReload>();
         
     }
 
@@ -72,6 +76,8 @@ public class PlayerCharacterController : MonoBehaviour
         playerActions.EquipPrimary.performed += ctx => EquipPrimaryWeapon();
         playerActions.EquipSecondary.performed += ctx => EquipSecondaryWeapon();
 
+        playerActions.Reload.performed += ctx => ReloadActiveWeapon();
+
         // Lock cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -90,6 +96,8 @@ public class PlayerCharacterController : MonoBehaviour
 
         playerActions.EquipPrimary.performed -= ctx => EquipPrimaryWeapon();
         playerActions.EquipSecondary.performed -= ctx => EquipSecondaryWeapon();
+
+        playerActions.Reload.performed -= ctx => ReloadActiveWeapon();
 
         // Lock cursor
         Cursor.lockState = CursorLockMode.None;
@@ -140,6 +148,12 @@ public class PlayerCharacterController : MonoBehaviour
     private void EquipSecondaryWeapon()
     {
         playerCharacterActiveWeapon.EquipSecondaryWeapon();
+    }
+
+    //Reload 
+    private void ReloadActiveWeapon()
+    {
+        playerCharacterWeaponReload.WeaponReload();
     }
 
 

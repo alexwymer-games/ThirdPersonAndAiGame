@@ -82,7 +82,7 @@ public class PlayerCharacterAiming : MonoBehaviour
     {
         //Unsubscribe to Events
         EventManager.StopListening<WeaponRecoil>(EventType.UPDATE_WEAPON_RECOIL, UpdateCurrentWeaponRecoil);
-        EventManager.StartListening(EventType.TRIGGER_WEAPON_RECOIL, TriggerWeaponRecoil);
+        EventManager.StopListening(EventType.TRIGGER_WEAPON_RECOIL, TriggerWeaponRecoil);
 
     }
 

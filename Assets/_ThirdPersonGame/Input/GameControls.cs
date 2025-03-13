@@ -153,6 +153,15 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""61ab8264-ac24-4ae0-841e-0e0b1ad1de29"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -346,7 +355,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b55fc294-f8a8-4c20-853c-611cc7b284d9"",
-                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -397,6 +406,28 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                     ""action"": ""EquipSecondary"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9e9d79df-79ce-49d4-8c69-7e4fd54d01dd"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fa46aade-163f-405c-999d-b71b21ed2da5"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -412,6 +443,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         m_Player_Holster = m_Player.FindAction("Holster", throwIfNotFound: true);
         m_Player_EquipPrimary = m_Player.FindAction("EquipPrimary", throwIfNotFound: true);
         m_Player_EquipSecondary = m_Player.FindAction("EquipSecondary", throwIfNotFound: true);
+        m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
     }
 
     ~@GameControls()
@@ -499,6 +531,7 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Holster;
     private readonly InputAction m_Player_EquipPrimary;
     private readonly InputAction m_Player_EquipSecondary;
+    private readonly InputAction m_Player_Reload;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -538,6 +571,10 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/EquipSecondary".
         /// </summary>
         public InputAction @EquipSecondary => m_Wrapper.m_Player_EquipSecondary;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Reload".
+        /// </summary>
+        public InputAction @Reload => m_Wrapper.m_Player_Reload;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -585,6 +622,9 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
             @EquipSecondary.started += instance.OnEquipSecondary;
             @EquipSecondary.performed += instance.OnEquipSecondary;
             @EquipSecondary.canceled += instance.OnEquipSecondary;
+            @Reload.started += instance.OnReload;
+            @Reload.performed += instance.OnReload;
+            @Reload.canceled += instance.OnReload;
         }
 
         /// <summary>
@@ -617,6 +657,9 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
             @EquipSecondary.started -= instance.OnEquipSecondary;
             @EquipSecondary.performed -= instance.OnEquipSecondary;
             @EquipSecondary.canceled -= instance.OnEquipSecondary;
+            @Reload.started -= instance.OnReload;
+            @Reload.performed -= instance.OnReload;
+            @Reload.canceled -= instance.OnReload;
         }
 
         /// <summary>
@@ -706,5 +749,12 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnEquipSecondary(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Reload" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnReload(InputAction.CallbackContext context);
     }
 }

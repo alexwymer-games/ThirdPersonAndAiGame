@@ -2132,6 +2132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1670013620}
   - component: {fileID: 1670013621}
+  - component: {fileID: 1670013622}
   m_Layer: 0
   m_Name: --RigLayers--
   m_TagString: Untagged
@@ -2181,6 +2182,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1670013622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1670013619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4e99eb2ef8bdd642a265b57c30525da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1753443907
 GameObject:
   m_ObjectHideFlags: 0
@@ -2991,6 +3004,7 @@ GameObject:
   - component: {fileID: 8262768955200282453}
   - component: {fileID: 8262768955200282455}
   - component: {fileID: 8262768955200282458}
+  - component: {fileID: 8262768955200282459}
   m_Layer: 0
   m_Name: PLAYER
   m_TagString: Player
@@ -5700,6 +5714,23 @@ MonoBehaviour:
   weaponLeftGrip: {fileID: 4334991010294445554}
   weaponRightGrip: {fileID: 4291893664364307141}
   playerRigAnimator: {fileID: 1670013621}
+--- !u!114 &8262768955200282459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 400974147380515182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c93450b05a144354aa7fddabce18c262, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerRigAnimator: {fileID: 1670013621}
+  weaponAnimationEvents: {fileID: 1670013622}
+  activeWeaponController: {fileID: 0}
+  leftHandTransform: {fileID: 4407293211802822622}
+  inHandMagazine: {fileID: 0}
 --- !u!1 &8265457660637665783
 GameObject:
   m_ObjectHideFlags: 0

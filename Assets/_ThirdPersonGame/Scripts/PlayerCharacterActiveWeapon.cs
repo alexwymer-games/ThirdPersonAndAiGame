@@ -181,7 +181,10 @@ public class PlayerCharacterActiveWeapon : MonoBehaviour
 
         
 
-
+    public WeaponController GetActiveWeapon()
+    {
+        return GetEquippedWeapon(activeWeaponIndex);
+    }
 
     public WeaponController GetEquippedWeapon(int index)
     {

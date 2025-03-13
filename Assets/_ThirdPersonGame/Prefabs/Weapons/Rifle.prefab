@@ -9947,6 +9947,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Rifle
   weaponSlotType: 0
+  weaponMagazine: {fileID: 6960552721237079848}
+  ammoCount: 100
+  clipSize: 30
   isFiring: 0
   muzzleFlashParticles:
   - {fileID: 6442041386340335219}
@@ -9979,6 +9982,7 @@ MonoBehaviour:
   - {x: -5, y: 100}
   - {x: -7, y: 100}
   - {x: -10, y: 100}
+  playerRigAnimator: {fileID: 0}
   verticalRecoil: 0
   horizontalRecoil: 0
   recoilDuration: 0.2
