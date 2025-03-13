@@ -9948,6 +9948,7 @@ MonoBehaviour:
   weaponName: Rifle
   weaponSlotType: 0
   weaponMagazine: {fileID: 6960552721237079848}
+  damage: 40
   ammoCount: 100
   clipSize: 30
   isFiring: 0

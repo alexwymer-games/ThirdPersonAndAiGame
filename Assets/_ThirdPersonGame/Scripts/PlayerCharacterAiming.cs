@@ -14,7 +14,8 @@ public class PlayerCharacterAiming : MonoBehaviour
     private float xRotation;
     private float yRotation;
 
-    private Rigidbody playerRigidBody;
+    //private Rigidbody playerRigidBody;
+    private CharacterController characterController;
 
     [SerializeField] private float turnSpeed = 15;
 
@@ -37,7 +38,9 @@ public class PlayerCharacterAiming : MonoBehaviour
     void Start()
     {
         //Get Components 
-        playerRigidBody = GetComponent<Rigidbody>();
+        //playerRigidBody = GetComponent<Rigidbody>();
+
+        characterController = GetComponent<CharacterController>();
         cinemachineImpulseListener = GetComponentInChildren<CinemachineImpulseListener>();
 
         mainCamera = Camera.main;
@@ -66,7 +69,8 @@ public class PlayerCharacterAiming : MonoBehaviour
 
         // Apply rotations
         camFollowPosition.localEulerAngles = new Vector3(yRotation, camFollowPosition.localEulerAngles.y, camFollowPosition.localEulerAngles.z);
-        playerRigidBody.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, xRotation, 0), turnSpeed * Time.deltaTime));
+        //playerRigidBody.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, xRotation, 0), turnSpeed * Time.deltaTime));
+        gameObject.transform.rotation = (Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, xRotation, 0), turnSpeed * Time.deltaTime));
     }
 
     private void OnEnable()

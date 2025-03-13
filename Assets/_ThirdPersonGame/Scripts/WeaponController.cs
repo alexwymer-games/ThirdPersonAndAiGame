@@ -9,6 +9,8 @@ public class WeaponController : MonoBehaviour
 
     public GameObject weaponMagazine;
 
+    [Header("Weapon Settings")]
+    public float damage;
     public int ammoCount;
     public int clipSize;
 
@@ -55,6 +57,14 @@ public class WeaponController : MonoBehaviour
                 hitEffect.Emit(1);
 
                 tracer.transform.position = hitInfo.point;
+
+                //Apply Damage if Hitbox is hit
+                var agentHitbox = hitInfo.collider.GetComponent<AIAgentHitBox>();
+
+                if (agentHitbox)
+                {
+                    agentHitbox.OnRaycastHit(this, ray.direction);
+                }
             }
     }
 

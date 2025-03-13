@@ -34,7 +34,6 @@ public class PlayerCharacterController : MonoBehaviour
         playerCharacterActiveWeapon = GetComponentInChildren<PlayerCharacterActiveWeapon>();
 
         playerCharacterWeaponReload = GetComponent<PlayerCharacterWeaponReload>();
-        
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -46,14 +45,12 @@ public class PlayerCharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playerCharacterLocomotion.MovePlayer(playerActions.Movement.ReadValue<Vector2>());
-
-        //playerCharacterAiming.AimWeapon(b_isAiming);
+        playerCharacterLocomotion.UpdatePlayerLocomotion(playerActions.Movement.ReadValue<Vector2>());
     }
 
     private void FixedUpdate()
     {
-        
+        //playerCharacterLocomotion.HandleJump();
     }
 
     private void LateUpdate()
@@ -64,18 +61,23 @@ public class PlayerCharacterController : MonoBehaviour
 
     private void OnEnable()
     {
+        //Enable Controls and Set Callbacks
         playerActions.Enable();
+        //Aim
         playerActions.Aim.performed += ctx => PlayerAimWeapon();
         playerActions.Aim.canceled += ctx => PlayerReturnToIdle();
-
+        //Sprint and Run
+        playerActions.Sprint.performed += ctx => PlayerSprint();
+        playerActions.Jump.performed += ctx => PlayerJump();
+        //Shoot
         playerActions.Shoot.performed += ctx => PlayerBeginShootingWeapon();
         playerActions.Shoot.canceled += ctx => PlayerStopShootingWeapon();
-
+        //Holster
         playerActions.Holster.performed += ctx => ToggleHolsterWeapon();
-
+        //Equip
         playerActions.EquipPrimary.performed += ctx => EquipPrimaryWeapon();
         playerActions.EquipSecondary.performed += ctx => EquipSecondaryWeapon();
-
+        //Reload
         playerActions.Reload.performed += ctx => ReloadActiveWeapon();
 
         // Lock cursor
@@ -88,7 +90,10 @@ public class PlayerCharacterController : MonoBehaviour
         playerActions.Disable();
         playerActions.Aim.performed -= ctx => PlayerAimWeapon();
         playerActions.Aim.canceled -= ctx => PlayerReturnToIdle();
-
+        //Sprint and Run
+        playerActions.Sprint.performed -= ctx => PlayerSprint();
+        playerActions.Jump.performed -= ctx => PlayerJump();
+        //SHoot
         playerActions.Shoot.performed -= ctx => PlayerBeginShootingWeapon();
         playerActions.Shoot.canceled -= ctx => PlayerStopShootingWeapon();
 
@@ -103,6 +108,18 @@ public class PlayerCharacterController : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
+
+    private void PlayerSprint()
+    {
+        playerCharacterLocomotion.Sprint();
+    }
+
+    //Player Jump Functions 
+    private void PlayerJump()
+    {
+        playerCharacterLocomotion.Jump();
+    }
+
 
     //Aiming Functions 
     private void PlayerAimWeapon()
