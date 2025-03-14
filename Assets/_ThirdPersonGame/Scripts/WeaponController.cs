@@ -59,7 +59,7 @@ public class WeaponController : MonoBehaviour
                 tracer.transform.position = hitInfo.point;
 
                 //Apply Damage if Hitbox is hit
-                var agentHitbox = hitInfo.collider.GetComponent<AIAgentHitBox>();
+                var agentHitbox = hitInfo.collider.GetComponent<AiAgentHitBox>();
 
                 if (agentHitbox)
                 {

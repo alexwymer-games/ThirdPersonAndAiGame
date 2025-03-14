@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class AIAgentHitBox : MonoBehaviour
+public class AiAgentHitBox : MonoBehaviour
 {
 
-    public AIAgentHealth agentHealth;
+    public AiAgentHealth agentHealth;
 
 
     public void OnRaycastHit(WeaponController weapon, Vector3 direction)
     {
-        agentHealth.TakeDamage(weapon.damage);
+        agentHealth.TakeDamage(weapon.damage, direction);
     }
 }

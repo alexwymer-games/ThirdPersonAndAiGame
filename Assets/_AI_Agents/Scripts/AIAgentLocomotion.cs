@@ -1,20 +1,11 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AIAgentLocomotion : MonoBehaviour
+public class AiAgentLocomotion : MonoBehaviour
 {
-    [Header("Agent Settings")]
-    public Transform playerTransform;
-    public float maxTime = 1.0f;
-    public float maxDistance = 1.0f;
-
-
     //Components
     NavMeshAgent navMeshAgent;
     Animator agentAnimator;
-
-    //Private Variables 
-    float pathTimer = 0.0f;
 
     private void Awake()
     {
@@ -23,32 +14,20 @@ public class AIAgentLocomotion : MonoBehaviour
         agentAnimator = GetComponent<Animator>();
     }
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void UpdateAgentLocomotion()
     {
-        
-    }
-
-    public void PathfindToPlayer()
-    {
-        //Update Timer
-        pathTimer -= Time.deltaTime;
-
-        if (pathTimer < 0.0f)
+        if (navMeshAgent.hasPath)
         {
-            //Reset Destination - Avoid Sqrt Check
-            float sqDistance = (playerTransform.position - navMeshAgent.destination).sqrMagnitude;
-            if (sqDistance > maxDistance * maxDistance)
-            {
-                navMeshAgent.destination = playerTransform.position;
-            }
-
-            //Reset Timer
-            pathTimer = maxTime;
+            
+            agentAnimator.SetFloat("Speed", navMeshAgent.velocity.magnitude);
         }
+        else
+        {
+            
 
-        //Update Animator Values
-        agentAnimator.SetFloat("Speed", navMeshAgent.velocity.magnitude);
+            agentAnimator.SetFloat("Speed", 0);
+        }
     }
+
+    
 }

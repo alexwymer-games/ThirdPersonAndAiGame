@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AIAgentRagdoll : MonoBehaviour
+public class AiAgentRagdoll : MonoBehaviour
 {
 
     public Rigidbody[] ragdollRigidBodies;
@@ -33,5 +33,11 @@ public class AIAgentRagdoll : MonoBehaviour
             rigidBody.isKinematic = false;
         }
         agentAnimator.enabled = false;  
+    }
+
+    public void ApplyForce(Vector3 force)
+    {
+        var rigidBody = agentAnimator.GetBoneTransform(HumanBodyBones.Hips).GetComponent<Rigidbody>();
+        rigidBody.AddForce(force, ForceMode.VelocityChange);
     }
 }
