@@ -9949,8 +9949,13 @@ MonoBehaviour:
   weaponSlotType: 0
   weaponMagazine: {fileID: 6960552721237079848}
   damage: 40
-  ammoCount: 100
+  currentAmmoCount: 0
+  extraAmmoCount: 0
   clipSize: 30
+  gunShotSFX: 1
+  gunLoadSFX: 2
+  gunUnloadSFX: 4
+  gunReleaseSlideSFX: 3
   isFiring: 0
   muzzleFlashParticles:
   - {fileID: 6442041386340335219}

@@ -33,8 +33,6 @@ public class AiChasePlayerState : AiState
     public void PathfindToPlayer(AiAgentController agent)
     {
 
-        Debug.Log("Pathfind");
-
         if (!agent.enabled)
         {
             return;

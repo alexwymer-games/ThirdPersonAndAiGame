@@ -17,7 +17,6 @@ public class PlayerCharacterWeaponReload : MonoBehaviour
     {
         activeWeaponController = GetComponent<PlayerCharacterActiveWeapon>();
 
-
         weaponAnimationEvents.WeaponAnimationEvent.AddListener(OnAnimationEvent);
     }
 
@@ -53,12 +52,8 @@ public class PlayerCharacterWeaponReload : MonoBehaviour
                 AttachMag();
                 break;
 
-            case "Pull_Slide":
-
-                break;
-
             case "Release_Slide":
-
+                ReleaseSlide();
                 break;
         }
     }
@@ -66,7 +61,11 @@ public class PlayerCharacterWeaponReload : MonoBehaviour
 
     private void DetachMag()
     {
+        //Get Active Weapon
         WeaponController weapon = activeWeaponController.GetActiveWeapon();
+
+        //Play Audio
+        AudioManager.audioManagerInstance.PlaySFX(weapon.gunUnloadSFX);
 
         inHandMagazine = Instantiate(weapon.weaponMagazine, leftHandTransform, true);
 
@@ -76,6 +75,8 @@ public class PlayerCharacterWeaponReload : MonoBehaviour
 
     private void DropMag()
     {
+        
+
         GameObject droppedMag = Instantiate(inHandMagazine, leftHandTransform.transform.position, leftHandTransform.transform.rotation);
         droppedMag.AddComponent<Rigidbody>();
         droppedMag.AddComponent<BoxCollider>();
@@ -92,22 +93,24 @@ public class PlayerCharacterWeaponReload : MonoBehaviour
     {
         WeaponController weapon = activeWeaponController.GetActiveWeapon();
 
+        //Play Audio
+        AudioManager.audioManagerInstance.PlaySFX(weapon.gunLoadSFX);
+
         weapon.weaponMagazine.SetActive(true);
 
         Destroy(inHandMagazine);
 
-        weapon.ammoCount = weapon.clipSize;
+        weapon.currentAmmoCount = weapon.clipSize;
 
         playerRigAnimator.ResetTrigger("ReloadWeapon");
     }
 
-    private void PullSlide()
-    {
-
-    }
-
     private void ReleaseSlide()
     {
+        //Get Active Weapon
+        WeaponController weapon = activeWeaponController.GetActiveWeapon();
 
+        //Play Audio
+        AudioManager.audioManagerInstance.PlaySFX(weapon.gunReleaseSlideSFX);
     }
 }

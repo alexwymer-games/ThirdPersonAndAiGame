@@ -14,7 +14,12 @@ using UnityEngine;
 
 public enum SoundType
 {
-    GAME_TRACK
+    GAME_TRACK,
+
+    RIFLE_SHOT,
+    RIFLE_LOAD,
+    RIFLE_SLIDEBACK,
+    RIFLE_UNLOAD
 }
 
 

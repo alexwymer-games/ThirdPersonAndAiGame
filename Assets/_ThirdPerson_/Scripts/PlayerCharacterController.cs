@@ -8,7 +8,9 @@ public class PlayerCharacterController : MonoBehaviour
     private GameControls.PlayerActions playerActions;
 
     //Components 
-    private PlayerCharacterLocomotion playerCharacterLocomotion;
+    //private PlayerCharacterLocomotion playerCharacterLocomotion;
+    private PlayerCharacterLocomotionUpdated gameCharacterLocomotionUpdated;
+
     private PlayerCharacterAiming playerCharacterAiming;
 
     private PlayerCharacterActiveWeapon playerCharacterActiveWeapon;
@@ -28,7 +30,9 @@ public class PlayerCharacterController : MonoBehaviour
         playerActions = gameControls.Player;
 
         //Get attached Components
-        playerCharacterLocomotion = GetComponent<PlayerCharacterLocomotion>();
+        //playerCharacterLocomotion = GetComponent<PlayerCharacterLocomotion>();
+        gameCharacterLocomotionUpdated = GetComponent<PlayerCharacterLocomotionUpdated>();
+
         playerCharacterAiming = GetComponent<PlayerCharacterAiming>();
 
         playerCharacterActiveWeapon = GetComponentInChildren<PlayerCharacterActiveWeapon>();
@@ -45,12 +49,14 @@ public class PlayerCharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playerCharacterLocomotion.UpdatePlayerLocomotion(playerActions.Movement.ReadValue<Vector2>());
+        //playerCharacterLocomotion.UpdatePlayerLocomotion(playerActions.Movement.ReadValue<Vector2>());
+
+        gameCharacterLocomotionUpdated.UpdatePlayer(playerActions.Movement.ReadValue<Vector2>());
     }
 
     private void FixedUpdate()
     {
-        //playerCharacterLocomotion.HandleJump();
+        gameCharacterLocomotionUpdated.FixedUpdatePlayer();
     }
 
     private void LateUpdate()
@@ -111,13 +117,15 @@ public class PlayerCharacterController : MonoBehaviour
 
     private void PlayerSprint()
     {
-        playerCharacterLocomotion.Sprint();
+       // playerCharacterLocomotion.Sprint();
     }
 
     //Player Jump Functions 
     private void PlayerJump()
     {
-        playerCharacterLocomotion.Jump();
+        //playerCharacterLocomotion.Jump();
+
+        gameCharacterLocomotionUpdated.Jump();
     }
 
 

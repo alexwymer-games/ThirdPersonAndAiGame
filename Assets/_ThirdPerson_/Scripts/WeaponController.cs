@@ -11,9 +11,15 @@ public class WeaponController : MonoBehaviour
 
     [Header("Weapon Settings")]
     public float damage;
-    public int ammoCount;
+    public int currentAmmoCount;
+    public int extraAmmoCount;
     public int clipSize;
 
+    [Header("Weapon Audio Settings")]
+    public SoundType gunShotSFX;
+    public SoundType gunLoadSFX;
+    public SoundType gunUnloadSFX;
+    public SoundType gunReleaseSlideSFX;
 
     public bool isFiring = false;
     public ParticleSystem[] muzzleFlashParticles;
@@ -30,12 +36,12 @@ public class WeaponController : MonoBehaviour
 
     public void StartFiring()
     {
-        if (ammoCount <= 0)
+        if (currentAmmoCount <= 0)
         {
             return;
         }
 
-        ammoCount--;
+        currentAmmoCount--;
 
             isFiring = true;
 

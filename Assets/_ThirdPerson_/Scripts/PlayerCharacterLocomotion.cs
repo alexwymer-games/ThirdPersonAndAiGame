@@ -17,18 +17,20 @@ public class PlayerCharacterLocomotion : MonoBehaviour
 
     [Header("Jump Settings")]
     public float jumpHeight;
+
+    [Header("Ground and Gravity")]
+    [SerializeField] private bool b_isGrounded;
+    [SerializeField] private float groundYOffset;
+    [SerializeField] private LayerMask groundLayerMask;
     public float gravity = -9.81f;
     public float stepDown;
-
-
-
-
+    Vector3 spherePos;
 
     Vector3 playerVelocity;
 
     bool b_isIdle;
     bool b_isWalking;
-    bool b_isJumping;
+    bool b_isJumping = false;
 
     //Components 
     private Animator playerAnimator;
@@ -48,13 +50,13 @@ public class PlayerCharacterLocomotion : MonoBehaviour
 
     //MOVEMENT FUNCTIONS
 
-
+    //UPDATE - Updates all player locomotion, called in PlayerCharacterController
     public void UpdatePlayerLocomotion(Vector2 inputVec)
     {
         HandlePlayerMovement(inputVec);
-        ApplyGravity();
+        //HandleJump();
 
-        characterController.Move(playerDirection.normalized * currentSpeed * Time.deltaTime);
+        ApplyGravity();
     }
     
     public void HandlePlayerMovement(Vector2 inputVec)
@@ -74,35 +76,41 @@ public class PlayerCharacterLocomotion : MonoBehaviour
         //Accelerate and Decelerate to target speed
         currentSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, acceleration * Time.deltaTime);
 
-
-        /*
-        if (inputVec != Vector2.zero) 
-        {
-            //playerVelocity.x = playerDirection.x * currentSpeed;
-            //playerVelocity.z = playerDirection.y * currentSpeed;
-        }
-        else
-        {
-            //Player is Idle
-           // movementState = MovementState.IDLE;
-
-            //playerVelocity.x = Mathf.MoveTowards(playerVelocity.x, 0, acceleration * Time.deltaTime);
-            //playerVelocity.z = Mathf.MoveTowards(playerVelocity.z, 0, acceleration * Time.deltaTime);
-        }*/
+        characterController.Move(playerDirection.normalized * currentSpeed * Time.deltaTime);
     }
 
+
+    private void OnAnimatorMove()
+    {
+        
+    }
 
     public void ApplyGravity()
     {
 
-        if (characterController.isGrounded && playerVelocity.y < 0) 
+        if (GroundCheck() && playerVelocity.y < 0) //IS GROUNDED
         {
+            //Debug.Log("Grounded");
             playerVelocity.y = -2f;        
         }
-        else
+        else //IS IN AIR
         {
+            //Debug.Log("Not Grounded");
             playerVelocity.y += gravity * Time.deltaTime;
         }
+
+        characterController.Move(playerVelocity * Time.deltaTime);
+    }
+
+    private bool GroundCheck()
+    {
+        spherePos = new Vector3(transform.position.x, transform.position.y - groundYOffset, transform.position.z);
+
+        if (Physics.CheckSphere(spherePos, characterController.radius - 0.05f, groundLayerMask))
+        {
+            return true;
+        }
+        return false;
     }
     
     public void HandleJump()
@@ -120,11 +128,12 @@ public class PlayerCharacterLocomotion : MonoBehaviour
         }
     }
 
-
     public void Jump()
     {
         if (!b_isJumping)
         {
+            Debug.Log("Jump");
+
             b_isJumping = true;
             playerVelocity.y = Mathf.Sqrt(2 * gravity * jumpHeight);
         }
@@ -135,5 +144,11 @@ public class PlayerCharacterLocomotion : MonoBehaviour
         b_isSprinting = true;
 
         movementState = MovementState.SPRINT;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(spherePos, 0.3f);
     }
 }

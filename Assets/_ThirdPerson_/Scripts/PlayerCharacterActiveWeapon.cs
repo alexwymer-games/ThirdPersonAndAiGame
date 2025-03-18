@@ -51,6 +51,9 @@ public class PlayerCharacterActiveWeapon : MonoBehaviour
     {
         if (activeWeaponController != null && !isHolstered) 
         {
+            //Play Audio
+            AudioManager.audioManagerInstance.PlaySFX(SoundType.RIFLE_SHOT);
+
             activeWeaponController.StartFiring();
             activeWeaponRecoil.GenerateRecoil(activeWeaponController.weaponName);
 
