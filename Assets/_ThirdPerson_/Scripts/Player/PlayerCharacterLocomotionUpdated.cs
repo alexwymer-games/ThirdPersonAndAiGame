@@ -3,6 +3,8 @@ using UnityEngine;
 public class PlayerCharacterLocomotionUpdated : MonoBehaviour
 {
 
+    public Animator rigAnimator;
+
     public float jumpHeight;
     public float gravity;
     public float stepDown;
@@ -12,9 +14,12 @@ public class PlayerCharacterLocomotionUpdated : MonoBehaviour
 
     public float pushPower = 2.0F;
 
-    Animator playerAnimator;
+    PlayerCharacterController playerCharacterController;
 
+    Animator playerAnimator;
     CharacterController characterController;
+    PlayerCharacterActiveWeapon activeWeapon;
+    PlayerCharacterWeaponReload reloadWeapon;
 
     Vector2 inputVector;
 
@@ -22,7 +27,10 @@ public class PlayerCharacterLocomotionUpdated : MonoBehaviour
     Vector3 velocity;
 
     [SerializeField] bool isJumping = false;
+    [SerializeField] bool isSprinting = false;
     [SerializeField] bool isGrounded;
+
+    int isSprintingParam = Animator.StringToHash("IsSprinting");
 
     Vector3 spherePos;
     [SerializeField] private float groundYOffset;
@@ -31,13 +39,42 @@ public class PlayerCharacterLocomotionUpdated : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        playerCharacterController = GetComponent<PlayerCharacterController>();
+
         playerAnimator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
+        activeWeapon = GetComponent<PlayerCharacterActiveWeapon>();
+        reloadWeapon = GetComponent<PlayerCharacterWeaponReload>();
     }
 
     // Update is called once per frame
     public void UpdatePlayer(Vector2 inputVec)
     {
+        //Modify inputVec 
+        #region MODIFY VEC
+
+        if (inputVec.x > 0)
+        {
+            inputVec.x = 1;
+        }
+
+        if (inputVec.x < 0)
+        {
+            inputVec.x = -1;
+        }
+
+        if (inputVec.y > 0)
+        {
+            inputVector.y = 1;
+        }
+
+        if (inputVec.y < 0)
+        {
+            inputVector.y = -1;
+        }
+
+        #endregion
+
         inputVector = inputVec;
 
         isGrounded = characterController.isGrounded;
@@ -45,6 +82,8 @@ public class PlayerCharacterLocomotionUpdated : MonoBehaviour
         //Set Animator Values
         playerAnimator.SetFloat("InputX", inputVec.x);
         playerAnimator.SetFloat("InputY", inputVec.y);
+
+        UpdateIsSprinting();
     }
 
     public void FixedUpdatePlayer()
@@ -101,6 +140,32 @@ public class PlayerCharacterLocomotionUpdated : MonoBehaviour
             float jumpVelocity = Mathf.Sqrt(2 * gravity * jumpHeight);
             SetInAir(jumpVelocity);
         }
+    }
+
+    public void Sprint()
+    {
+        isSprinting = !isSprinting;
+        //playerAnimator.SetBool(isSprintingParam, true);
+        //rigAnimator.SetBool(isSprintingParam, true);
+    }
+
+
+    private void UpdateIsSprinting()
+    {
+        bool playerIsSprinting = GetIsSprinting();
+
+        playerAnimator.SetBool(isSprintingParam, playerIsSprinting);
+        rigAnimator.SetBool(isSprintingParam, playerIsSprinting);
+    }
+
+    private bool GetIsSprinting()
+    {
+        bool isFiring = activeWeapon.IsFiring();
+        bool isreloading = reloadWeapon.isReloading;
+        bool isChangingWeapon = activeWeapon.isChangingWeapons;
+        bool isAiming = playerCharacterController.b_isAiming;
+
+        return isSprinting && !isFiring && !isreloading && !isChangingWeapon && !isAiming;
     }
 
     private void SetInAir(float jumpVelocity)

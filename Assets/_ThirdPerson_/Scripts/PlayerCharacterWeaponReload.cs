@@ -7,10 +7,11 @@ public class PlayerCharacterWeaponReload : MonoBehaviour
     public WeaponAnimationEvents weaponAnimationEvents;
 
     public PlayerCharacterActiveWeapon activeWeaponController;
-
     public Transform leftHandTransform;
-
     public GameObject inHandMagazine;
+
+    public bool isReloading;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -29,6 +30,8 @@ public class PlayerCharacterWeaponReload : MonoBehaviour
     public void WeaponReload()
     {
         playerRigAnimator.SetTrigger("ReloadWeapon");
+
+        isReloading = true;
     }
 
     private void OnAnimationEvent(string eventName)
@@ -103,6 +106,8 @@ public class PlayerCharacterWeaponReload : MonoBehaviour
         weapon.currentAmmoCount = weapon.clipSize;
 
         playerRigAnimator.ResetTrigger("ReloadWeapon");
+
+        isReloading = false;
     }
 
     private void ReleaseSlide()

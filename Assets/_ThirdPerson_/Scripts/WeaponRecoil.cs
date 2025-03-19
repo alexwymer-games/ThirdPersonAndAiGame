@@ -19,6 +19,8 @@ public class WeaponRecoil : MonoBehaviour
     public float recoilDuration;
     public float recoilTime;
 
+    public float recoilModifier = 1.0f;
+
     private void Awake()
     {
         //Get Components

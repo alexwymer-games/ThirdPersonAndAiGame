@@ -18,7 +18,7 @@ public class PlayerCharacterController : MonoBehaviour
 
 
     //Player Variables 
-    private bool b_isAiming = false;
+    public bool b_isAiming = false;
 
     private bool b_weaponIsHolstered = true;
 
@@ -117,7 +117,9 @@ public class PlayerCharacterController : MonoBehaviour
 
     private void PlayerSprint()
     {
-       // playerCharacterLocomotion.Sprint();
+        // playerCharacterLocomotion.Sprint();
+
+        gameCharacterLocomotionUpdated.Sprint();
     }
 
     //Player Jump Functions 
@@ -133,11 +135,13 @@ public class PlayerCharacterController : MonoBehaviour
     private void PlayerAimWeapon()
     {
         b_isAiming = true;
+        playerCharacterAiming.UpdateAiming(b_isAiming);
     }
 
     private void PlayerReturnToIdle()
     {
         b_isAiming = false;
+        playerCharacterAiming.UpdateAiming(b_isAiming);
     }
 
     //Shooting Functions 

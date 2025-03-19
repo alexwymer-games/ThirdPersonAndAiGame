@@ -33,7 +33,8 @@ public class PlayerCharacterActiveWeapon : MonoBehaviour
     public Transform weaponRightGrip;
 
     public Animator playerRigAnimator;
-    
+
+    public bool isChangingWeapons = false;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -45,6 +46,10 @@ public class PlayerCharacterActiveWeapon : MonoBehaviour
     private void Update()
     {
         activeWeaponController = GetEquippedWeapon(activeWeaponIndex);
+
+        bool notSpriting = playerRigAnimator.GetCurrentAnimatorStateInfo(2).shortNameHash == Animator.StringToHash("NotSprinting");
+
+        //Dont update weapon if !notSprinting
     }
 
     public void BeginFiringWeapon()
@@ -125,6 +130,8 @@ public class PlayerCharacterActiveWeapon : MonoBehaviour
     //Coroutines
     IEnumerator SwitchWeapon(int holsterIndex, int activateIndex)
     {
+        playerRigAnimator.SetInteger("WeaponIndex", activateIndex);
+
         yield return StartCoroutine(HolsterWeapon(holsterIndex));
         yield return StartCoroutine(ActivateWeapon(activateIndex));
         activeWeaponIndex = activateIndex;
@@ -133,6 +140,8 @@ public class PlayerCharacterActiveWeapon : MonoBehaviour
     IEnumerator HolsterWeapon(int index)
     {
         isHolstered = true;
+
+        isChangingWeapons = true;
 
         var weapon = GetEquippedWeapon(index);
 
@@ -149,10 +158,14 @@ public class PlayerCharacterActiveWeapon : MonoBehaviour
             }
             while (playerRigAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f);
         }
+
+        isChangingWeapons = false;
     }
 
     IEnumerator ActivateWeapon(int index)
     {
+        isChangingWeapons = true;
+
         var weapon = GetEquippedWeapon(index);
 
         if (weapon)
@@ -169,6 +182,8 @@ public class PlayerCharacterActiveWeapon : MonoBehaviour
 
             isHolstered = false;
         }
+
+        isChangingWeapons = false;
     }
 
 
@@ -196,5 +211,18 @@ public class PlayerCharacterActiveWeapon : MonoBehaviour
             return null;
         }
         return equippedWeaponControllers[index];
+    }
+
+
+    public bool IsFiring()
+    {
+        WeaponController currentWeapon = GetActiveWeapon();
+
+        if (!currentWeapon)
+        {
+            return false;
+        }
+
+        return currentWeapon.isFiring;
     }
 }

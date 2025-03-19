@@ -94,6 +94,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "AimXAxis",
+                    "type": "Value",
+                    "id": "9603a7a9-0a9a-4a25-b173-559ef2aa419b",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "AimYAxis",
+                    "type": "Value",
+                    "id": "6a64d622-cfed-4551-9583-89c74f9e09d6",
+                    "expectedControlType": "Axis",
+                    "processors": "Clamp(min=-70,max=70)",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -402,6 +420,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "684f8840-4276-4bbb-93ed-7075d2775e00",
+                    "path": "<Gamepad>/rightStick/x",
+                    "interactions": "",
+                    "processors": "Clamp(min=-70,max=70)",
+                    "groups": "",
+                    "action": "AimXAxis",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0f6c809c-c9cb-4351-ae1f-14775f8a913e",
+                    "path": "<Mouse>/delta/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AimXAxis",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "88af1eee-8b88-4b48-8fa1-55ccfa80e1be",
+                    "path": "<Gamepad>/rightStick/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AimYAxis",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a8f8691b-63fd-4969-815b-55575164baad",
+                    "path": "<Mouse>/delta/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AimYAxis",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

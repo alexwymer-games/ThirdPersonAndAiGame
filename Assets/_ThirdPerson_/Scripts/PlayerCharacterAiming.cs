@@ -8,6 +8,11 @@ public class PlayerCharacterAiming : MonoBehaviour
     private CinemachineImpulseListener cinemachineImpulseListener;
 
 
+    //Cinemachine 
+    public InputAxis xAxis;
+    public InputAxis yAxis;
+
+
     [SerializeField] private Transform camFollowPosition;
     [SerializeField] private float mouseSensitivity = 1f;
 
@@ -24,11 +29,17 @@ public class PlayerCharacterAiming : MonoBehaviour
     [SerializeField] private float aimDuration;
 
 
+    private Animator playerAnimator;
+
+    int isAimingParam = Animator.StringToHash("IsAiming");
+
     //Weapon Recoil Stuff
     private float recoilTime;
     private float verticalRecoil;
     private float horizontalRecoil;
     private float recoilDuration;
+
+    private float recoilModifier = 1.0f;
 
 
 
@@ -42,6 +53,8 @@ public class PlayerCharacterAiming : MonoBehaviour
 
         characterController = GetComponent<CharacterController>();
         cinemachineImpulseListener = GetComponentInChildren<CinemachineImpulseListener>();
+
+        playerAnimator = GetComponent<Animator>();
 
         mainCamera = Camera.main;
     }
@@ -59,8 +72,8 @@ public class PlayerCharacterAiming : MonoBehaviour
         if (recoilTime > 0)
         {
             //Modify Y Rotation with Recoil Values
-            yRotation -= ((verticalRecoil / 100) * Time.deltaTime) / recoilDuration;
-            xRotation -= ((horizontalRecoil / 10) * Time.deltaTime) / recoilDuration;
+            yRotation -= (((verticalRecoil / 100) * Time.deltaTime) / recoilDuration) * recoilModifier;
+            xRotation -= (((horizontalRecoil / 10) * Time.deltaTime) / recoilDuration) * recoilModifier;
             recoilTime -= Time.deltaTime;
         }
 
@@ -104,7 +117,8 @@ public class PlayerCharacterAiming : MonoBehaviour
 
             // Apply rotations
             camFollowPosition.localEulerAngles = new Vector3(yRotation, camFollowPosition.localEulerAngles.y, camFollowPosition.localEulerAngles.z);
-        }*/
+        }
+        */
     }
 
     //Get Recoil Values for the equipped weapon
@@ -114,12 +128,21 @@ public class PlayerCharacterAiming : MonoBehaviour
         recoilDuration = weaponRecoil.recoilDuration;
         verticalRecoil = weaponRecoil.verticalRecoil;
         horizontalRecoil = weaponRecoil.horizontalRecoil;
+        recoilModifier = weaponRecoil.recoilModifier;
     }
 
     //Trigger Recoil - Reset the recoil timer
     private void TriggerWeaponRecoil()
     {
         recoilTime = recoilDuration;
+    }
+    
+
+    public void UpdateAiming(bool isAiming)
+    {
+        playerAnimator.SetBool(isAimingParam, isAiming);
+
+        recoilModifier = isAiming ? 0.3f : 1f;
     }
 
 
