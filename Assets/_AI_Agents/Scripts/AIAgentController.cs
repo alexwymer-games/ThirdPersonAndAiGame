@@ -44,7 +44,6 @@ public class AiAgentController : MonoBehaviour
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 
         aiStateMachine = new AiStateMachine(this);
-        aiStateMachine.RegisterState(new AiIdleState());
         aiStateMachine.RegisterState(new AiChasePlayerState());
         aiStateMachine.RegisterState(new AiDeathState());
         aiStateMachine.ChangeState(initialAiState);
@@ -57,5 +56,10 @@ public class AiAgentController : MonoBehaviour
         aiAgentLocomotion.UpdateAgentLocomotion();
 
         aiAgentHealth.UpdateAgentHealth();
+    }
+
+    public void SetPlayerTargetReference(Transform _playerTransform)
+    {
+        playerTransform = _playerTransform;
     }
 }

@@ -52,6 +52,8 @@ public class PlayerCharacterActiveWeapon : MonoBehaviour
         //Dont update weapon if !notSprinting
     }
 
+    //Firing Functions
+
     public void BeginFiringWeapon()
     {
         if (activeWeaponController != null && !isHolstered) 
@@ -74,6 +76,18 @@ public class PlayerCharacterActiveWeapon : MonoBehaviour
             activeWeaponController.StopFiring();
         }
     }
+
+    public bool IsFiring()
+    {
+        WeaponController currentWeapon = GetActiveWeapon();
+        if (!currentWeapon)
+        {
+            return false;
+        }
+        return currentWeapon.isFiring;
+    }
+
+
 
     public void EquipWeapon(WeaponController weaponController)
     {
@@ -187,6 +201,7 @@ public class PlayerCharacterActiveWeapon : MonoBehaviour
     }
 
 
+
     public void EquipPrimaryWeapon()
     {
         SetActiveWeapon(WeaponSlot.PRIMARY);
@@ -198,7 +213,7 @@ public class PlayerCharacterActiveWeapon : MonoBehaviour
     }
 
         
-
+    //Getters
     public WeaponController GetActiveWeapon()
     {
         return GetEquippedWeapon(activeWeaponIndex);
@@ -214,15 +229,5 @@ public class PlayerCharacterActiveWeapon : MonoBehaviour
     }
 
 
-    public bool IsFiring()
-    {
-        WeaponController currentWeapon = GetActiveWeapon();
-
-        if (!currentWeapon)
-        {
-            return false;
-        }
-
-        return currentWeapon.isFiring;
-    }
+    
 }

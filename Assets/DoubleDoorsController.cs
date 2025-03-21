@@ -1,10 +1,11 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DoubleDoorsController : MonoBehaviour
 {
     //Variables
     [SerializeField] private bool b_DoorOpening;
-    [SerializeField] private DoorState doorState;
+    [SerializeField] public DoorState doorState = DoorState.CLOSED;
     [SerializeField] private DoorStatus doorStatus = DoorStatus.LOCKED;
 
     //Game Objects 
@@ -34,20 +35,14 @@ public class DoubleDoorsController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.O))
+        if (Input.GetKeyUp(KeyCode.O)) 
         {
-            OpenDoor();
+            ToggleDoor();
         }
 
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            CloseDoor();
-        }
 
-        HandleDoorMovement();
 
-        
+        HandleDoorMovement();        
     }
 
 
@@ -69,14 +64,29 @@ public class DoubleDoorsController : MonoBehaviour
     }
 
 
+    public void ToggleDoor()
+    {
+        if (doorState == DoorState.OPEN)
+        {
+            CloseDoor();
+        }
+        else if (doorState == DoorState.CLOSED)
+        {
+            OpenDoor();
+        }
+    }
+
+
     public void OpenDoor()
     {
         b_DoorOpening = true;
+        doorState = DoorState.OPEN;
     }
 
     public void CloseDoor()
     {
         b_DoorOpening = false;
+        doorState = DoorState.CLOSED;
     }
 
 
@@ -86,7 +96,7 @@ public class DoubleDoorsController : MonoBehaviour
         {
 
             other.gameObject.GetComponent<PlayerCharacterActions>().SetDoorInteraction(this);
-            EventManager.TriggerEvent(EventType.DOOR_INRANGE, true);
+            EventManager.TriggerEvent(EventType.DOOR_INRANGE, doorState);
         }
     }
 
@@ -95,7 +105,7 @@ public class DoubleDoorsController : MonoBehaviour
         if (other.gameObject.CompareTag("Player") && doorStatus == DoorStatus.LOCKED)
         {
             other.gameObject.GetComponent<PlayerCharacterActions>().SetDoorInteraction(null);
-            EventManager.TriggerEvent(EventType.DOOR_OUTRANGE, false);
+            EventManager.TriggerEvent(EventType.DOOR_OUTRANGE);
         }
     }
 }

@@ -25,8 +25,8 @@ public class PlayerCharacterActions : MonoBehaviour
         //Enable Controls and Assign Functions 
 
         //Subscribe to Events
-        EventManager.StartListening<bool>(EventType.DOOR_INRANGE, SetInRangeOfDoor);
-        EventManager.StartListening<bool>(EventType.DOOR_OUTRANGE, SetInRangeOfDoor);
+        EventManager.StartListening<DoorState>(EventType.DOOR_INRANGE, DoorInRange);
+        EventManager.StartListening(EventType.DOOR_OUTRANGE, DoorOutRange);
     }
 
     private void OnDisable()
@@ -34,8 +34,8 @@ public class PlayerCharacterActions : MonoBehaviour
         //Disable Controls and Assign Functions 
 
         //Unsubscribe to Events
-        EventManager.StopListening<bool>(EventType.DOOR_INRANGE, SetInRangeOfDoor);
-        EventManager.StopListening<bool>(EventType.DOOR_OUTRANGE, SetInRangeOfDoor);
+        EventManager.StopListening<DoorState>(EventType.DOOR_INRANGE, DoorInRange);
+        EventManager.StopListening(EventType.DOOR_OUTRANGE, DoorOutRange);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -62,29 +62,24 @@ public class PlayerCharacterActions : MonoBehaviour
         if (b_isRangeOfDoor)
         {
             //Trigger Event and Pass Door 
-            //EventManager.TriggerEvent(EventType.DOOR_INTERACT, currentDoorController);
+            EventManager.TriggerEvent(EventType.DOOR_INTERACT, currentDoorController.doorState);
 
-            currentDoorController.OpenDoor();
+            currentDoorController.ToggleDoor();
         }
     }
 
 
     //Getters and Setters
-    public void SetInRangeOfDoor(bool inRange)
+   
+    public void DoorInRange(DoorState doorState)
     {
-        b_isRangeOfDoor = inRange;
-
-        if (b_isRangeOfDoor)
-        {
-            playerCharacterController.playerState = PlayerState.INTERACT;
-        }
-        else
-        {
-            playerCharacterController.playerState = PlayerState.IDLE;
-        }
+        b_isRangeOfDoor = true;
+        playerCharacterController.playerState = PlayerState.INTERACT;
     }
 
-    
-
-    
+    public void DoorOutRange()
+    {
+        b_isRangeOfDoor = false;
+        playerCharacterController.playerState = PlayerState.IDLE;
+    }
 }

@@ -70,17 +70,22 @@ public class PlayerCharacterController : MonoBehaviour
         //Aim
         playerActions.Aim.performed += ctx => PlayerAimWeapon();
         playerActions.Aim.canceled += ctx => PlayerReturnToIdle();
+
         //Sprint and Run
         playerActions.Sprint.performed += ctx => PlayerSprint();
         playerActions.Jump.performed += ctx => PlayerJump();
+
         //Shoot
         playerActions.Shoot.performed += ctx => PlayerBeginShootingWeapon();
         playerActions.Shoot.canceled += ctx => PlayerStopShootingWeapon();
+
         //Holster
         playerActions.Holster.performed += ctx => ToggleHolsterWeapon();
+
         //Equip
         playerActions.EquipPrimary.performed += ctx => EquipPrimaryWeapon();
         playerActions.EquipSecondary.performed += ctx => EquipSecondaryWeapon();
+
         //Reload
         playerActions.Interact.performed += ctx => EvaluateInteractState();
 
@@ -97,14 +102,18 @@ public class PlayerCharacterController : MonoBehaviour
         //Sprint and Run
         playerActions.Sprint.performed -= ctx => PlayerSprint();
         playerActions.Jump.performed -= ctx => PlayerJump();
+
         //SHoot
         playerActions.Shoot.performed -= ctx => PlayerBeginShootingWeapon();
         playerActions.Shoot.canceled -= ctx => PlayerStopShootingWeapon();
 
+
         playerActions.Holster.performed -= ctx => ToggleHolsterWeapon();
+
 
         playerActions.EquipPrimary.performed -= ctx => EquipPrimaryWeapon();
         playerActions.EquipSecondary.performed -= ctx => EquipSecondaryWeapon();
+
 
         playerActions.Interact.performed -= ctx => EvaluateInteractState();
 

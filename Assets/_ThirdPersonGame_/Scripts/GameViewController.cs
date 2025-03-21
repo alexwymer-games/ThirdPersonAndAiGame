@@ -1,12 +1,23 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameViewController : MonoBehaviour
 {
 
     //UI Components
-    [Header("UI Components")]
-    [SerializeField] private GameObject doorInteractTextObject;
+    [Header("Player UI Components")]
+    [SerializeField] private Slider playerHealthSlider;
+    [SerializeField] private Slider playerStaminaSlider;
 
+    [SerializeField] private Image stateIcon;
+    [SerializeField] private TextMeshProUGUI ammoText;
+
+
+    [Header("Door UI Components")]
+    private DoorState currentDoorState;
+    [SerializeField] private GameObject doorInteractTextObject;
+    [SerializeField] private TextMeshProUGUI doorInteractText;
 
 
     #region LIFECYCLE
@@ -16,14 +27,19 @@ public class GameViewController : MonoBehaviour
     private void OnEnable()
     {
         //Subscribe to Events
-        EventManager.StartListening<bool>(EventType.DOOR_INRANGE, ToggleDoorInteractText);
-        EventManager.StartListening<bool>(EventType.DOOR_OUTRANGE, ToggleDoorInteractText);
+        EventManager.StartListening<DoorState>(EventType.DOOR_INRANGE, ShowDoorInteractText);
+        EventManager.StartListening(EventType.DOOR_OUTRANGE, HideDoorInteractText);
+
+        EventManager.StartListening<DoorState>(EventType.DOOR_INTERACT, UpdateDoorText);
+
     }
     private void OnDisable()
     {
         //Unsubscribe to Events
-        EventManager.StopListening<bool>(EventType.DOOR_INRANGE, ToggleDoorInteractText);
-        EventManager.StopListening<bool>(EventType.DOOR_OUTRANGE, ToggleDoorInteractText);
+        EventManager.StopListening<DoorState>(EventType.DOOR_INRANGE, ShowDoorInteractText);
+        EventManager.StopListening(EventType.DOOR_OUTRANGE, HideDoorInteractText);
+
+        EventManager.StopListening<DoorState>(EventType.DOOR_INTERACT, UpdateDoorText);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -41,8 +57,31 @@ public class GameViewController : MonoBehaviour
     #endregion
 
 
-    public void ToggleDoorInteractText(bool _toggle)
+    private void UpdateDoorText(DoorState _doorState)
     {
-        doorInteractTextObject.SetActive(_toggle);
+        ShowDoorInteractText(_doorState);
+    }
+
+    public void ShowDoorInteractText(DoorState _doorState)
+    {
+
+        Debug.Log("Update View");
+
+        if (_doorState == DoorState.OPEN)
+        {
+            doorInteractText.text = "Press 'Interact' to Close";
+        }
+        else if (_doorState == DoorState.CLOSED)
+        {
+            doorInteractText.text = "Press 'Interact' to Open";
+        }
+
+        doorInteractTextObject.SetActive(true);
+    }
+
+
+    public void HideDoorInteractText()
+    {
+        doorInteractTextObject.SetActive(false);
     }
 }
