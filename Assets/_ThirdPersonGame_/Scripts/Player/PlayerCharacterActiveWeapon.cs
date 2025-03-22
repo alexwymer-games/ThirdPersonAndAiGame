@@ -174,6 +174,8 @@ public class PlayerCharacterActiveWeapon : MonoBehaviour
         }
 
         isChangingWeapons = false;
+
+       
     }
 
     IEnumerator ActivateWeapon(int index)
